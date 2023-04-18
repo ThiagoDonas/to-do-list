@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Home</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <!--
+      Need a visual blank slate?
+      Remove all code in `styles.css`!
+    -->
+    <link rel="stylesheet" href="styles.css" />
+    <script type="module" src="script.js"></script>
+  </head>
+  <body>
+    <div id="form">
+      <form id="myform" class="formstyle" action="">
+        <div class="nome">
+          <label for="Atividade">Nome da Atividade:</label>
+          <input
+            id="Activity"
+            id="name"
+            name="Atividade"
+            type="text"
+            placeholder="Nome da atividade"
+          />
+        </div>
+
+        <div class="data">
+          <label for="Data">Data:</label>
+          <input id="date" name="Data" type="date" />
+        </div>
+        <div>
+          <input id="envio" name="submit" type="submit" value="Enviar" />
+        </div>
+      </form>
+    </div>
+
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <th>Atividades programadas</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Nome</td>
+            <td>Data</td>
+          </tr>
+          <tr>
+            <td>Aula</td>
+            <td>28/09</td>
+            <td><button>Excluir</button></td>
+            <td><button>Editar</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,27 @@
+.formstyle {
+  border: 1px solid;
+  padding: 30px;
+}
+#submit {
+  background-color: aliceblue;
+  font-size: large;
+}
+div {
+  width: 75%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+table {
+  width: 100%;
+  border: 1px solid;
+}
+td {
+  border: 1px solid;
+}
+label {
+  display: block;
+}
+input {
+  border-radius: 10px;
+}
