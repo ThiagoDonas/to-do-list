@@ -4,6 +4,10 @@ const date = forms.elements.Data;
 const submit = forms.elements.submit;
 let tarefas = [];
 let tabela = document.getElementById('corpotabela');
+let editeButtons = [];
+let deleteButtons = [];
+let editando = false;
+let saveId;
 
 function adicionarTarefas(name, date) {
   //tarefas = [...tarefas, { name, date }];
@@ -47,20 +51,21 @@ function createColum() {
   return document.createElement('td');
 }
 
-function createButtonEdite() {
+function createButtonEdite(index) {
   const button = document.createElement('button');
   button.innerText = 'Editar';
+  button.id = index;
   button.type = 'button';
   button.name = 'editar';
   return button;
 }
 
-function creteButtonExcluir() {
+function creteButtonExcluir(index) {
   const button = document.createElement('button');
   button.innerText = 'Excluir';
+  button.id = index;
   button.type = 'button';
   button.name = 'excluir';
-  console.log(button);
   return button;
 }
 
@@ -70,31 +75,64 @@ function rendereizarTabela() {
     const linha = cretaeRow();
     const colunaName = createColum();
     const colunaDate = createColum();
-    const buttonEdite = createButtonEdite();
-    const buttonExcluir = creteButtonExcluir();
+    const buttonEdite = createButtonEdite(tarefas.indexOf(tarefa));
+    const buttonExcluir = creteButtonExcluir(tarefas.indexOf(tarefa));
     colunaName.innerText = tarefa.name;
     colunaDate.innerText = tarefa.date;
-
     linha.appendChild(colunaName);
     linha.appendChild(colunaDate);
     linha.appendChild(buttonEdite);
     linha.appendChild(buttonExcluir);
     tabela.appendChild(linha);
   });
+  editeButtons = document.getElementsByName('editar');
+  deleteButtons = document.getElementsByName('excluir');
+}
+
+function editarLinhaTabela() {
+  if (editeButtons != null) {
+    editeButtons.forEach((button) => {
+      button.addEventListener('click', (e) => {
+        editarTarefa(button.id);
+        editando = true;
+        saveId = button.id;
+      });
+    });
+  }
+}
+
+function excluirLinhaTabela() {
+  if (deleteButtons != null) {
+    deleteButtons.forEach((button) => {
+      button.addEventListener('click', (e) => {
+        removerLista(button.id);
+        rendereizarTabela();
+      });
+    });
+  }
 }
 
 forms.addEventListener('submit', (e) => {
   e.preventDefault();
-  adicionarTarefas(forms.elements.name.value, forms.elements.date.value);
+  if (editando) {
+    salvarTarefa(saveId, forms.elements.name.value, forms.elements.date.value);
+    editando = false;
+  } else {
+    adicionarTarefas(forms.elements.name.value, forms.elements.date.value);
+  }
   rendereizarTabela();
   limpaForms();
 });
 
-tabela.addEventListener('click button', (e) => {
-  log.console('oi');
+tabela.addEventListener('mouseover', (e) => {
+  editarLinhaTabela();
 });
 
-//recuperarTarefas();
+tabela.addEventListener('mouseover', (e) => {
+  excluirLinhaTabela();
+});
+
+recuperarTarefas();
 if (tarefas.length > 0) {
   rendereizarTabela();
 }
