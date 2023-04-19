@@ -9,17 +9,15 @@
       Remove all code in `styles.css`!
     -->
     <link rel="stylesheet" href="styles.css" />
-    <script type="module" src="script.js"></script>
   </head>
   <body>
     <div id="form">
       <form id="myform" class="formstyle" action="">
         <div class="nome">
-          <label for="Atividade">Nome da Atividade:</label>
+          <label for="name ">Nome da Atividade:</label>
           <input
-            id="Activity"
             id="name"
-            name="Atividade"
+            name="name"
             type="text"
             placeholder="Nome da atividade"
             required
@@ -27,11 +25,11 @@
         </div>
 
         <div class="data">
-          <label for="Data">Data:</label>
-          <input id="date" name="Data" type="date" required />
+          <label for="date">Data:</label>
+          <input id="date" name="date" type="date" required />
         </div>
         <div>
-          <input id="envio" name="submit" type="submit" value="Enviar" />
+          <button type="submit">Enviar</button>
         </div>
       </form>
     </div>
@@ -42,14 +40,14 @@
           <tr>
             <th>Atividades programadas</th>
           </tr>
-        </thead>
-        <tbody>
           <tr>
             <td>Nome</td>
             <td>Data</td>
           </tr>
-        </tbody>
+        </thead>
+        <tbody id="corpotabela"></tbody>
       </table>
     </div>
+    <script src="script.js"></script>
   </body>
 </html>
