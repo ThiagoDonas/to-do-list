@@ -6,7 +6,6 @@ let tarefas = [];
 let tabela = document.getElementById('corpotabela');
 
 function adicionarTarefas(name, date) {
-  console.log(name, date);
   //tarefas = [...tarefas, { name, date }];
   tarefas.push({ name, date });
   localStorage.setItem('tarefas', JSON.stringify(tarefas));
@@ -43,6 +42,7 @@ function removerLista(index) {
 function cretaeRow() {
   return document.createElement('tr');
 }
+
 function createColum() {
   return document.createElement('td');
 }
@@ -50,18 +50,22 @@ function createColum() {
 function createButtonEdite() {
   const button = document.createElement('button');
   button.innerText = 'Editar';
-  button.id = 'editar';
+  button.type = 'button';
+  button.name = 'editar';
+  return button;
 }
 
 function creteButtonExcluir() {
   const button = document.createElement('button');
   button.innerText = 'Excluir';
-  button.id = 'excluir';
+  button.type = 'button';
+  button.name = 'excluir';
+  console.log(button);
+  return button;
 }
 
 function rendereizarTabela() {
   tabela.innerHTML = ' ';
-  console.log(tarefas);
   tarefas.forEach((tarefa) => {
     const linha = cretaeRow();
     const colunaName = createColum();
@@ -86,6 +90,11 @@ forms.addEventListener('submit', (e) => {
   limpaForms();
 });
 
+tabela.addEventListener('click button', (e) => {
+  log.console('oi');
+});
+
+//recuperarTarefas();
 if (tarefas.length > 0) {
   rendereizarTabela();
 }
