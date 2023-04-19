@@ -1,4 +1,4 @@
-function createAtividade() {
+function createActivity() {
   const tabela = document.getElementById('table');
   const row = table.insertRow(2);
   const cell1 = row.insertCell(0);
@@ -37,9 +37,8 @@ submit.onclick = function (e) {
   e.preventDefault();
   const exist = document.getElementById(`${nome.value}${date.value}`);
   if (exist == null) {
-    createAtividade();
+    createActivity();
   } else {
-    
   }
 };
 
