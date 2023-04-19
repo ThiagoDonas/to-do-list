@@ -40,9 +40,6 @@ submit.onclick = function (e) {
     createActivity();
   } else {
   }
-};
-
-window.onclick = function () {
   const buttontable = document.querySelectorAll('.button');
   buttontable.forEach(function (element) {
     element.onclick = function (e) {
