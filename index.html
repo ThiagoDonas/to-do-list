@@ -13,21 +13,39 @@
   <body>
     <div id="form">
       <form id="myform" class="formstyle" action="">
-        <div class="nome">
+        <div>
           <label for="name ">Nome da Atividade:</label>
           <input
             id="name"
             name="name"
             type="text"
             placeholder="Nome da atividade"
+            title="Escreva o nome da atividade"
             required
           />
         </div>
 
-        <div class="data">
+        <div>
           <label for="date">Data:</label>
-          <input id="date" name="date" type="date" required />
+          <input
+            id="date"
+            name="date"
+            type="date"
+            title="Marque o dia da atividade"
+            required
+          />
         </div>
+        <div>
+          <label for="hora">Hora:</label>
+          <input
+            id="hora"
+            name="hora"
+            type="time"
+            title="Marque o dia da atividade"
+            required
+          />
+        </div>
+
         <div>
           <button type="submit">Enviar</button>
         </div>
@@ -36,14 +54,22 @@
 
     <div>
       <table id="table">
+        <colgroup>
+          <col class="nome" />
+          <col class="data" />
+          <col class="hora" />
+          <col class="editar" />
+          <col class="excluir" />
+        </colgroup>
         <thead>
-          <tr>
-            <th>Atividades programadas</th>
-          </tr>
-          <tr>
-            <td>Nome</td>
-            <td>Data</td>
-          </tr>
+          <caption>
+            Atividades programadas
+          </caption>
+          <td>Nome</td>
+          <td>Data</td>
+          <td>Hora</td>
+          <td>Editar</td>
+          <td>Excluir</td>
         </thead>
         <tbody id="corpotabela"></tbody>
       </table>
