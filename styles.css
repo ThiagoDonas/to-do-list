@@ -1,62 +1,86 @@
 body {
   background-color: #ccc;
 }
+
 .formstyle {
-  border: 1px solid;
+  /* border: 1px solid; */
   padding: 10px;
   border-radius: 10px;
 }
+
 form button {
   background-color: rgb(135, 236, 135);
+  font-weight: bold;
 }
+
 div {
   width: 75%;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
-  font-family: 'Times New Roman', Times, serif;
+  font-family: Apple Chancery, cursive;
   border-radius: 10px;
   padding: 5px;
 }
 
 label {
   display: block;
-  font-family: 'Times New Roman', Times, serif;
+  font-family: Apple Chancery, cursive;
   font-weight: bold;
+  text-decoration: underline wavy;
+  text-align: center;
+  text-shadow: 0.5px 0.5px 0.5px coral;
 }
 
 input {
   border-radius: 10px;
 }
 
+input:hover,
+button:hover {
+  color: red;
+}
+
 table {
   width: 100%;
-  border: 1px solid;
+  /* border: 1px solid; */
   padding: 10px;
   border-radius: 10px;
 }
 
 thead,
 caption {
+  font-size: 20px;
   font-weight: bold;
   text-align: center;
-  font-family: OCR A Std, monospace;
+  font-family: Apple Chancery, cursive;
+  font-variant: small-caps;
 }
+
 tbody,
 tbody button {
   font-family: Apple Chancery, cursive;
 }
+
 .nome,
 .data,
 .hora {
   background-color: beige;
 }
+
 .editar {
   background-color: aqua;
 }
+
 .excluir {
   background-color: lightcoral;
 }
+
 td {
   border: 1px solid;
+  border-radius: 10px;
+}
+
+tbody button {
+  font-weight: bold;
 }
