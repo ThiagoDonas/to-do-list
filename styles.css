@@ -3,10 +3,12 @@ body {
 }
 .formstyle {
   border: 1px solid;
-  padding: 30px;
+  padding: 10px;
   border-radius: 10px;
 }
-
+form button {
+  background-color: rgb(135, 236, 135);
+}
 div {
   width: 75%;
   margin-left: auto;
@@ -14,7 +16,7 @@ div {
   text-align: center;
   font-family: 'Times New Roman', Times, serif;
   border-radius: 10px;
-  padding: 3px;
+  padding: 5px;
 }
 
 label {
@@ -40,7 +42,8 @@ caption {
   text-align: center;
   font-family: OCR A Std, monospace;
 }
-tbody {
+tbody,
+tbody button {
   font-family: Apple Chancery, cursive;
 }
 .nome,
