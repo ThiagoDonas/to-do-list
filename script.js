@@ -1,13 +1,22 @@
 const forms = document.getElementById('myform');
-const name = forms.elements.Atividade;
-const date = forms.elements.Data;
-const submit = forms.elements.submit;
 let tarefas = [];
 let tabela = document.getElementById('corpotabela');
-let editeButtons = [];
-let deleteButtons = [];
 let editando = false;
-let saveId;
+let tabelaFiltrada = null;
+let inputFiltro = document.getElementById('filtro');
+console.log(tabelaFiltrada);
+function filtraTabela() {
+  textoFiltro = inputFiltro.value.toUpperCase();
+  if (textoFiltro.length >= 1 && textoFiltro.length <= 3) return;
+  tabelaFiltrada = tarefas.filter(function (tarefa) {
+    return (
+      tarefa.name.toUpperCase().indexOf(textoFiltro) > -1 ||
+      tarefa.date.toUpperCase().indexOf(textoFiltro) > -1 ||
+      tarefa.hora.toUpperCase().indexOf(textoFiltro) > -1
+    );
+  });
+  rendereizarTabela();
+}
 
 function adicionarTarefas(name, date, hora) {
   //tarefas = [...tarefas, { name, date }];
@@ -16,18 +25,17 @@ function adicionarTarefas(name, date, hora) {
 }
 
 function recuperarTarefas() {
-  const temp = JSON.parse(localStorage.getItem('tarefas'));
-  temp.forEach((tarefa) => {
+  JSON.parse(localStorage.getItem('tarefas')).forEach((tarefa) => {
     adicionarTarefas(tarefa.name, tarefa.date, tarefa.hora);
   });
   //tarefas = [...JSON.parse(localStorage.getItem('tarefas'))]
 }
 
 function editarTarefa(index) {
-  const temp = tarefas[index];
-  forms.elements.name.value = temp.name;
-  forms.elements.date.value = temp.date;
-  forms.elements.hora.value = temp.hora;
+  editando = index;
+  forms.elements.name.value = tarefas[index].name;
+  forms.elements.date.value = tarefas[index].date;
+  forms.elements.hora.value = tarefas[index].hora;
 }
 
 function salvarTarefa(index, name, date, hora) {
@@ -43,6 +51,7 @@ function limpaForms() {
 
 function removerLista(index) {
   tarefas.splice(index, 1);
+  rendereizarTabela();
 }
 
 function cretaeRow() {
@@ -53,79 +62,66 @@ function createColum() {
   return document.createElement('td');
 }
 
-function createButtonEdite(index) {
+function createButtonEdite() {
   const button = document.createElement('button');
-  const td = document.createElement('td');
-  td.appendChild(button);
-  button.innerText = 'Editar';
-  button.id = index;
-  button.type = 'button';
-  button.name = 'editar';
-  return td;
+  return button;
 }
 
-function creteButtonExcluir(index) {
+function creteButtonExcluir() {
   const button = document.createElement('button');
-  const td = document.createElement('td');
-  td.appendChild(button);
-  button.innerText = 'Excluir';
-  button.id = index;
-  button.type = 'button';
-  button.name = 'excluir';
-  return td;
+  return button;
+}
+
+function insertTextButton(button, text) {
+  button.innerText = text;
 }
 
 function rendereizarTabela() {
   tabela.innerHTML = ' ';
-  tarefas.forEach((tarefa) => {
-    const linha = cretaeRow();
-    const colunaName = createColum();
-    const colunaDate = createColum();
-    const colunaHora = createColum();
-    const buttonEdite = createButtonEdite(tarefas.indexOf(tarefa));
-    const buttonExcluir = creteButtonExcluir(tarefas.indexOf(tarefa));
+  let filtro = tarefas;
+  if (tabelaFiltrada) {
+    filtro = tabelaFiltrada;
+  } else {
+    filtro = tarefas;
+  }
+  filtro.forEach((tarefa) => {
+    let linha = cretaeRow();
+    let colunaName = createColum();
+    let colunaDate = createColum();
+    let colunaHora = createColum();
+    let colunaBottaoEdite = createColum();
+    let colunaBottaoExcluir = createColum();
+    let buttonEdite = createButtonEdite();
+    insertTextButton(buttonEdite, 'Editar');
+    buttonEdite.addEventListener('click', (e) => {
+      e.stopPropagation;
+      editarTarefa(filtro.indexOf(tarefa));
+    });
+    let buttonExcluir = creteButtonExcluir();
+    insertTextButton(buttonExcluir, 'Excluir');
+    buttonExcluir.addEventListener('click', (e) => {
+      e.stopPropagation;
+      removerLista(filtro.indexOf(tarefa));
+    });
     colunaName.innerText = tarefa.name;
     colunaDate.innerText = tarefa.date;
     colunaHora.innerText = tarefa.hora;
+    colunaBottaoEdite.appendChild(buttonEdite);
+    colunaBottaoExcluir.appendChild(buttonExcluir); //
     linha.appendChild(colunaName);
     linha.appendChild(colunaDate);
     linha.appendChild(colunaHora);
-    linha.appendChild(buttonEdite);
-    linha.appendChild(buttonExcluir);
+    linha.appendChild(colunaBottaoEdite);
+    linha.appendChild(colunaBottaoExcluir);
     tabela.appendChild(linha);
   });
-  editeButtons = document.getElementsByName('editar');
-  deleteButtons = document.getElementsByName('excluir');
-}
-
-function editarLinhaTabela() {
-  if (editeButtons != null) {
-    editeButtons.forEach((button) => {
-      button.addEventListener('click', (e) => {
-        editarTarefa(button.id);
-        editando = true;
-        saveId = button.id;
-      });
-    });
-  }
-}
-
-function excluirLinhaTabela() {
-  if (deleteButtons != null) {
-    deleteButtons.forEach((button) => {
-      button.addEventListener('click', (e) => {
-        removerLista(button.id);
-        rendereizarTabela();
-      });
-    });
-  }
 }
 
 forms.addEventListener('submit', (e) => {
   e.preventDefault();
-  if (editando) {
+  if (editando || editando === 0) {
     salvarTarefa(
-      saveId,
+      editando,
       forms.elements.name.value,
       forms.elements.date.value,
       forms.elements.hora.value
@@ -142,14 +138,9 @@ forms.addEventListener('submit', (e) => {
   limpaForms();
 });
 
-tabela.addEventListener('mouseover', (e) => {
-  editarLinhaTabela();
+inputFiltro.addEventListener('input', (e) => {
+  filtraTabela();
 });
-
-tabela.addEventListener('mouseover', (e) => {
-  excluirLinhaTabela();
-});
-
 //recuperarTarefas();
 if (tarefas.length > 0) {
   rendereizarTabela();
