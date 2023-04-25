@@ -52,8 +52,9 @@ function limpaForms() {
   forms.elements.hora.value = null;
 }
 
-function removerLista(index) {
+function removerTarefa(index) {
   tarefas.splice(index, 1);
+  localStorage.setItem('tarefas', JSON.stringify(tarefas));
   rendereizarTabela();
 }
 
@@ -99,7 +100,7 @@ function rendereizarTabela() {
     insertTextButton(buttonExcluir, 'Excluir');
     buttonExcluir.addEventListener('click', (e) => {
       e.stopPropagation;
-      removerLista(filtro.indexOf(tarefa));
+      removerTarefa(filtro.indexOf(tarefa));
     });
     colunaName.innerText = tarefa.name;
     colunaDate.innerText = tarefa.date;
@@ -140,7 +141,8 @@ inputFiltro.addEventListener('input', (e) => {
   filtraTabela();
 });
 
-//recuperarTarefas();
+recuperarTarefas();
+
 if (tarefas.length > 0) {
   rendereizarTabela();
 }
