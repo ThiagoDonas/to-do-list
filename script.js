@@ -65,7 +65,7 @@ function createColum() {
   return document.createElement('td');
 }
 
-function creteButton() {
+function createButton() {
   const button = document.createElement('button');
   return button;
 }
@@ -95,7 +95,7 @@ function rendereizarTabela() {
       e.stopPropagation;
       editarTarefa(filtro.indexOf(tarefa));
     });
-    let buttonExcluir = creteButton();
+    let buttonExcluir = createButton();
     insertTextButton(buttonExcluir, 'Excluir');
     buttonExcluir.addEventListener('click', (e) => {
       e.stopPropagation;
@@ -139,6 +139,7 @@ forms.addEventListener('submit', (e) => {
 inputFiltro.addEventListener('input', (e) => {
   filtraTabela();
 });
+
 //recuperarTarefas();
 if (tarefas.length > 0) {
   rendereizarTabela();
