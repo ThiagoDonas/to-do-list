@@ -67,8 +67,7 @@ function createColum() {
 }
 
 function createButton() {
-  const button = document.createElement('button');
-  return button;
+  return document.createElement('button');
 }
 
 function insertTextButton(button, text) {
