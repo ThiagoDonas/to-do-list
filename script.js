@@ -4,17 +4,20 @@ let tabela = document.getElementById('corpotabela');
 let editando = false;
 let tabelaFiltrada = null;
 let inputFiltro = document.getElementById('filtro');
-console.log(tabelaFiltrada);
+
 function filtraTabela() {
   textoFiltro = inputFiltro.value.toUpperCase();
-  if (textoFiltro.length >= 1 && textoFiltro.length <= 3) return;
-  tabelaFiltrada = tarefas.filter(function (tarefa) {
-    return (
-      tarefa.name.toUpperCase().indexOf(textoFiltro) > -1 ||
-      tarefa.date.toUpperCase().indexOf(textoFiltro) > -1 ||
-      tarefa.hora.toUpperCase().indexOf(textoFiltro) > -1
-    );
-  });
+  if (textoFiltro.length >= 0 && textoFiltro.length < 3) {
+    tabelaFiltrada = null;
+  } else {
+    tabelaFiltrada = tarefas.filter(function (tarefa) {
+      return (
+        tarefa.name.toUpperCase().indexOf(textoFiltro) > -1 ||
+        tarefa.date.toUpperCase().indexOf(textoFiltro) > -1 ||
+        tarefa.hora.toUpperCase().indexOf(textoFiltro) > -1
+      );
+    });
+  }
   rendereizarTabela();
 }
 
@@ -62,12 +65,7 @@ function createColum() {
   return document.createElement('td');
 }
 
-function createButtonEdite() {
-  const button = document.createElement('button');
-  return button;
-}
-
-function creteButtonExcluir() {
+function creteButton() {
   const button = document.createElement('button');
   return button;
 }
@@ -91,13 +89,13 @@ function rendereizarTabela() {
     let colunaHora = createColum();
     let colunaBottaoEdite = createColum();
     let colunaBottaoExcluir = createColum();
-    let buttonEdite = createButtonEdite();
+    let buttonEdite = createButton();
     insertTextButton(buttonEdite, 'Editar');
     buttonEdite.addEventListener('click', (e) => {
       e.stopPropagation;
       editarTarefa(filtro.indexOf(tarefa));
     });
-    let buttonExcluir = creteButtonExcluir();
+    let buttonExcluir = creteButton();
     insertTextButton(buttonExcluir, 'Excluir');
     buttonExcluir.addEventListener('click', (e) => {
       e.stopPropagation;
