@@ -5,22 +5,6 @@ let editando = false;
 let tabelaFiltrada = null;
 let inputFiltro = document.getElementById('filtro');
 
-function filtraTabela() {
-  textoFiltro = inputFiltro.value.toUpperCase();
-  if (textoFiltro.length >= 0 && textoFiltro.length < 3) {
-    tabelaFiltrada = null;
-  } else {
-    tabelaFiltrada = tarefas.filter(function (tarefa) {
-      return (
-        tarefa.name.toUpperCase().indexOf(textoFiltro) > -1 ||
-        tarefa.date.toUpperCase().indexOf(textoFiltro) > -1 ||
-        tarefa.hora.toUpperCase().indexOf(textoFiltro) > -1
-      );
-    });
-  }
-  rendereizarTabela();
-}
-
 function adicionarTarefas(name, date, hora) {
   //tarefas = [...tarefas, { name, date }];
   tarefas.push({ name, date, hora });
@@ -74,6 +58,34 @@ function insertTextButton(button, text) {
   button.innerText = text;
 }
 
+function colocaEventoNoBotaoEdite(button, index) {
+  button.addEventListener('click', (e) => {
+    e.stopPropagation;
+    editarTarefa(index);
+  });
+}
+function colocaEventoNoBotaoExcluir(button, index) {
+  button.addEventListener('click', (e) => {
+    e.stopPropagation;
+    removerTarefa(index);
+  });
+}
+function filtraTabela() {
+  textoFiltro = inputFiltro.value.toUpperCase();
+  if (textoFiltro.length >= 0 && textoFiltro.length < 3) {
+    tabelaFiltrada = null;
+  } else {
+    tabelaFiltrada = tarefas.filter(function (tarefa) {
+      return (
+        tarefa.name.toUpperCase().indexOf(textoFiltro) > -1 ||
+        tarefa.date.toUpperCase().indexOf(textoFiltro) > -1 ||
+        tarefa.hora.toUpperCase().indexOf(textoFiltro) > -1
+      );
+    });
+  }
+  rendereizarTabela();
+}
+
 function rendereizarTabela() {
   tabela.innerHTML = ' ';
   let filtro = tarefas;
@@ -90,22 +102,16 @@ function rendereizarTabela() {
     let colunaBottaoEdite = createColum();
     let colunaBottaoExcluir = createColum();
     let buttonEdite = createButton();
-    insertTextButton(buttonEdite, 'Editar');
-    buttonEdite.addEventListener('click', (e) => {
-      e.stopPropagation;
-      editarTarefa(filtro.indexOf(tarefa));
-    });
     let buttonExcluir = createButton();
+    insertTextButton(buttonEdite, 'Editar');
+    colocaEventoNoBotaoEdite(buttonEdite, filtro.indexOf(tarefa));
     insertTextButton(buttonExcluir, 'Excluir');
-    buttonExcluir.addEventListener('click', (e) => {
-      e.stopPropagation;
-      removerTarefa(filtro.indexOf(tarefa));
-    });
+    colocaEventoNoBotaoExcluir(buttonExcluir, filtro.indexOf(tarefa));
     colunaName.innerText = tarefa.name;
     colunaDate.innerText = tarefa.date;
     colunaHora.innerText = tarefa.hora;
     colunaBottaoEdite.appendChild(buttonEdite);
-    colunaBottaoExcluir.appendChild(buttonExcluir); //
+    colunaBottaoExcluir.appendChild(buttonExcluir);
     linha.appendChild(colunaName);
     linha.appendChild(colunaDate);
     linha.appendChild(colunaHora);
