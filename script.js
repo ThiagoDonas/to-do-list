@@ -64,6 +64,7 @@ function colocaEventoNoBotaoEdite(button, index) {
     editarTarefa(index);
   });
 }
+
 function colocaEventoNoBotaoExcluir(button, index) {
   button.addEventListener('click', (e) => {
     e.stopPropagation;
@@ -72,6 +73,7 @@ function colocaEventoNoBotaoExcluir(button, index) {
 }
 function filtraTabela() {
   textoFiltro = inputFiltro.value.toUpperCase();
+
   if (textoFiltro.length >= 0 && textoFiltro.length < 3) {
     tabelaFiltrada = null;
   } else {
@@ -83,17 +85,20 @@ function filtraTabela() {
       );
     });
   }
+
   rendereizarTabela();
 }
 
 function rendereizarTabela() {
   tabela.innerHTML = ' ';
   let filtro = tarefas;
+
   if (tabelaFiltrada) {
     filtro = tabelaFiltrada;
   } else {
     filtro = tarefas;
   }
+
   filtro.forEach((tarefa) => {
     let linha = cretaeRow();
     let colunaName = createColum();
@@ -103,6 +108,7 @@ function rendereizarTabela() {
     let colunaBottaoExcluir = createColum();
     let buttonEdite = createButton();
     let buttonExcluir = createButton();
+
     insertTextButton(buttonEdite, 'Editar');
     colocaEventoNoBotaoEdite(buttonEdite, filtro.indexOf(tarefa));
     insertTextButton(buttonExcluir, 'Excluir');
@@ -110,6 +116,7 @@ function rendereizarTabela() {
     colunaName.innerText = tarefa.name;
     colunaDate.innerText = tarefa.date;
     colunaHora.innerText = tarefa.hora;
+
     colunaBottaoEdite.appendChild(buttonEdite);
     colunaBottaoExcluir.appendChild(buttonExcluir);
     linha.appendChild(colunaName);
@@ -123,6 +130,7 @@ function rendereizarTabela() {
 
 forms.addEventListener('submit', (e) => {
   e.preventDefault();
+
   if (editando || editando === 0) {
     salvarTarefa(
       editando,
