@@ -14,8 +14,8 @@ function adicionarTarefas(name, date, hora) {
 function recuperarTarefas() {
   try {
     if (typeof localStorage.getItem('tarefas') === 'string') {
-      const tarefas = JSON.parse(localStorage.getItem('tarefas'));
       console.log(localStorage.getItem('tarefas'));
+      const tarefas = JSON.parse(localStorage.getItem('tarefas'));
       if (typeof tarefas === 'object') {
         if (tarefas.length > 0) {
           tarefas.forEach((tarefa) => {
