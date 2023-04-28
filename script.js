@@ -6,7 +6,7 @@ let tabelaFiltrada = null;
 let inputFiltro = document.getElementById('filtro');
 
 function adicionarTarefas(name, date, hora) {
-  //tarefas = [...tarefas, { name, date }];
+  //tarefas = [...tarefas, { name, date, hora }];
   tarefas.push({ name, date, hora });
   localStorage.setItem('tarefas', JSON.stringify(tarefas));
 }
@@ -71,6 +71,7 @@ function colocaEventoNoBotaoExcluir(button, index) {
     removerTarefa(index);
   });
 }
+
 function filtraTabela() {
   textoFiltro = inputFiltro.value.toUpperCase();
 
