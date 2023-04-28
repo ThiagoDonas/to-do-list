@@ -12,6 +12,9 @@ function adicionarTarefas(name, date, hora) {
 }
 
 function recuperarTarefas() {
+  localStorage.setItem('tarefas', 'THIAGO');
+  console.log(localStorage.getItem('tarefas') === 'string');
+  console.log(typeof localStorage.getItem('tarefas') === 'string');
   try {
     if (typeof localStorage.getItem('tarefas') === 'string') {
       console.log(localStorage.getItem('tarefas'));
@@ -29,6 +32,7 @@ function recuperarTarefas() {
   } catch (e) {
     console.log('Arquivo Json armazenado inválido');
   }
+
   //tarefas = [...JSON.parse(localStorage.getItem('tarefas'))]
 }
 
