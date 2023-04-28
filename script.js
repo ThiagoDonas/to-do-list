@@ -10,11 +10,14 @@ function adicionarTarefas(name, date, hora) {
   tarefas.push({ name, date, hora });
   localStorage.setItem('tarefas', JSON.stringify(tarefas));
 }
-
 function recuperarTarefas() {
-  JSON.parse(localStorage.getItem('tarefas')).forEach((tarefa) => {
-    adicionarTarefas(tarefa.name, tarefa.date, tarefa.hora);
-  });
+  const tarefas = JSON.parse(localStorage.getItem('tarefas'));
+  if (tarefas) {
+    tarefas.forEach((tarefa) => {
+      adicionarTarefas(tarefa.name, tarefa.date, tarefa.hora);
+    });
+  }
+
   //tarefas = [...JSON.parse(localStorage.getItem('tarefas'))]
 }
 
@@ -73,7 +76,7 @@ function colocaEventoNoBotaoExcluir(button, index) {
 }
 
 function filtraTabela() {
-  textoFiltro = inputFiltro.value.toUpperCase();
+  textoFiltro = inputFiltro.value.toUpperCase().trim();
 
   if (textoFiltro.length >= 0 && textoFiltro.length < 3) {
     tabelaFiltrada = null;
@@ -142,7 +145,7 @@ forms.addEventListener('submit', (e) => {
     editando = false;
   } else {
     adicionarTarefas(
-      forms.elements.name.value,
+      forms.elements.name.value.trim(),
       forms.elements.date.value,
       forms.elements.hora.value
     );
