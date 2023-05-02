@@ -12,16 +12,15 @@ function adicionarTarefas(name, date, hora) {
 }
 
 function recuperarTarefas() {
-  localStorage.setItem('tarefas', 'THIAGO');
-  console.log(localStorage.getItem('tarefas') === 'string');
-  console.log(typeof localStorage.getItem('tarefas') === 'string');
   try {
-    if (typeof localStorage.getItem('tarefas') === 'string') {
-      console.log(localStorage.getItem('tarefas'));
-      const tarefas = JSON.parse(localStorage.getItem('tarefas'));
-      if (typeof tarefas === 'object') {
-        if (tarefas.length > 0) {
-          tarefas.forEach((tarefa) => {
+    let tipoArmazenado = typeof localStorage.getItem('tarefas');
+    let tarefasSalvas = JSON.parse(localStorage.getItem('tarefas'));
+    let tarefasSalvasTipoCorreto =
+      typeof tarefasSalvas === 'object' && tarefasSalvas.length > 0;
+    if (tarefasSalvas) {
+      if (tipoArmazenado === 'string') {
+        if (tarefasSalvasTipoCorreto) {
+          tarefasSalvas.forEach((tarefa) => {
             if (tarefa.name && tarefa.date && tarefa.hora) {
               adicionarTarefas(tarefa.name, tarefa.date, tarefa.hora);
             }
@@ -32,7 +31,6 @@ function recuperarTarefas() {
   } catch (e) {
     console.log('Arquivo Json armazenado inválido');
   }
-
   //tarefas = [...JSON.parse(localStorage.getItem('tarefas'))]
 }
 
