@@ -23,36 +23,37 @@ function isJsonString(string) {
 function recuperarTarefas() {
   if (isJsonString(localStorage.getItem('tarefas'))) {
     let tipoArmazenado = typeof localStorage.getItem('tarefas');
-    console.log('oi');
     let tarefasSalvas = JSON.parse(localStorage.getItem('tarefas'));
     let tarefasSalvasTipoCorreto =
       typeof tarefasSalvas === 'object' && tarefasSalvas.length > 0;
-    if (tarefasSalvas) {
-      if (tipoArmazenado === 'string') {
-        if (tarefasSalvasTipoCorreto) {
-          tarefasSalvas.forEach((tarefa) => {
-            if (tarefa.name && tarefa.date && tarefa.hora) {
-              adicionarTarefas(tarefa.name, tarefa.date, tarefa.hora);
-            }
-          });
+
+    if (
+      tarefasSalvas &&
+      tipoArmazenado === 'string' &&
+      tarefasSalvasTipoCorreto
+    ) {
+      tarefasSalvas.forEach((tarefa) => {
+        if (tarefa.name && tarefa.date && tarefa.hora) {
+          adicionarTarefas(tarefa.name, tarefa.date, tarefa.hora);
         }
-      }
+      });
     }
   } else {
     let tipoArmazenado = typeof localStorage.getItem('tarefas');
     let tarefasSalvas = JSON.parse(`"${localStorage.getItem('tarefas')}"`);
     let tarefasSalvasTipoCorreto =
       typeof tarefasSalvas === 'object' && tarefasSalvas.length > 0;
-    if (tarefasSalvas) {
-      if (tipoArmazenado === 'string') {
-        if (tarefasSalvasTipoCorreto) {
-          tarefasSalvas.forEach((tarefa) => {
-            if (tarefa.name && tarefa.date && tarefa.hora) {
-              adicionarTarefas(tarefa.name, tarefa.date, tarefa.hora);
-            }
-          });
+
+    if (
+      tarefasSalvas &&
+      tipoArmazenado === 'string' &&
+      tarefasSalvasTipoCorreto
+    ) {
+      tarefasSalvas.forEach((tarefa) => {
+        if (tarefa.name && tarefa.date && tarefa.hora) {
+          adicionarTarefas(tarefa.name, tarefa.date, tarefa.hora);
         }
-      }
+      });
     }
   }
 
