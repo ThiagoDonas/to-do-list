@@ -1,12 +1,44 @@
 const forms = document.getElementById('myform');
 let tarefas = [];
+let tarefasPorMes = [[], [], [], [], [], [], [], [], [], [], [], []];
 let tabela = document.getElementById('corpotabela');
 let editando = false;
 let tabelaFiltrada = null;
 let inputFiltro = document.getElementById('filtro');
 
+function mesTarefa(date) {
+  return new Date(date).getMonth();
+}
+
+function ordenaTarefasOrdenadas(tarefasDoMes) {
+  let tarefasDoMesOrdenada = tarefasDoMes.sort((tarefa1, tarefa2) => {
+    let dateTarefa1 = new Date(tarefa1.date).getDate();
+    let dateTarefa2 = new Date(tarefa2.date).getDate();
+    if (dateTarefa1 > dateTarefa2) {
+      return 1;
+    } else if (dateTarefa1 < dateTarefa2) {
+      return -1;
+    } else {
+      let timeTarefa1 = new Date(`${tarefa1.date} ${tarefa1.hora}`).getTime();
+      let timeTarefa2 = new Date(`${tarefa2.date} ${tarefa2.hora}`).getTime();
+      if (timeTarefa1 > timeTarefa2) {
+        return 1;
+      } else if (timeTarefa1 < timeTarefa2) {
+        return -1;
+      }
+      return 0;
+    }
+  });
+  return tarefasDoMesOrdenada;
+}
+
 function adicionarTarefas(name, date, hora) {
   //tarefas = [...tarefas, { name, date, hora }];
+  let mesDaTarefa = mesTarefa(date);
+  tarefasPorMes[mesDaTarefa].push({ name, date, hora });
+  tarefasPorMes[mesDaTarefa] = ordenaTarefasOrdenadas(
+    tarefasPorMes[mesDaTarefa]
+  );
   tarefas.push({ name, date, hora });
   localStorage.setItem('tarefas', JSON.stringify(tarefas));
 }
