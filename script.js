@@ -235,12 +235,14 @@ function filtraTabela() {
 
   rendereizarTabela();
 }
+
 function limpaTabela() {
   for (let i = 0; i < 12; i++) {
     tabela = document.getElementById(`${i}`);
     tabela.innerHTML = ' ';
   }
 }
+
 function renderizaTabelaPorMes(tarefasDoMes, mesDaTarefa) {
   console.log(tarefasDoMes);
   tabela = document.getElementById(`${mesDaTarefa}`);
@@ -281,7 +283,6 @@ function renderizaTabelaPorMes(tarefasDoMes, mesDaTarefa) {
   });
 }
 function rendereizarTabela() {
-  console.log('oi');
   limpaTabela();
   for (var [key, tarefasDoAno] of tarefasPorAno) {
     tarefasDoAno.forEach((tarefas) => {
