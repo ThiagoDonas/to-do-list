@@ -16,7 +16,7 @@ function mesTarefa(date) {
   return new Date(date).getMonth();
 }
 
-function ordenaTarefasOrdenadas(tarefasDoMes) {
+function ordenaTarefas(tarefasDoMes) {
   let tarefasDoMesOrdenada = tarefasDoMes.sort((tarefa1, tarefa2) => {
     let dateTarefa1 = new Date(tarefa1.date).getDate();
     let dateTarefa2 = new Date(tarefa2.date).getDate();
@@ -50,12 +50,12 @@ function adicionarTarefas(name, date, hora) {
   //let anoAtual = new Date().getFullYear();
   // if (anoTarefa(date) == anoAtual) {
   //   tarefasPorMes.anoCorrente[mesDaTarefa].push({ name, date, hora });
-  //   tarefasPorMes.anoCorrente[mesDaTarefa] = ordenaTarefasOrdenadas(
+  //   tarefasPorMes.anoCorrente[mesDaTarefa] = ordenaTarefas(
   //     tarefasPorMes.anoCorrente[mesDaTarefa]
   //   );
   // } else {
   //   tarefasPorMes.proximoAno[mesDaTarefa].push({ name, date, hora });
-  //   tarefasPorMes.proximoAno[mesDaTarefa] = ordenaTarefasOrdenadas(
+  //   tarefasPorMes.proximoAno[mesDaTarefa] = ordenaTarefas(
   //     tarefasPorMes.proximoAno[mesDaTarefa]
   //   );
   // }
@@ -63,9 +63,7 @@ function adicionarTarefas(name, date, hora) {
   if (tarefasPorAno.has(`${anoDaTarefa}`)) {
     let adicionaTarefa = tarefasPorAno.get(`${anoDaTarefa}`);
     adicionaTarefa[mesDaTarefa].push({ name, date, hora });
-    adicionaTarefa[mesDaTarefa] = ordenaTarefasOrdenadas(
-      adicionaTarefa[mesDaTarefa]
-    );
+    adicionaTarefa[mesDaTarefa] = ordenaTarefas(adicionaTarefa[mesDaTarefa]);
     tarefasPorAno.set(`${anoDaTarefa}`, adicionaTarefa);
   } else {
     tarefasPorAno.set(`${anoDaTarefa}`, [
