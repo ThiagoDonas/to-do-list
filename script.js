@@ -109,19 +109,13 @@ function recuperarTarefas() {
     let tarefasSalvas = JSON.parse(localStorage.getItem('tarefas'));
     let tarefas = new Map(Object.entries(tarefasSalvas));
     let tarefasDoAno = tarefas.get('2023');
-    console.log(
-      tarefasSalvas,
-      tipoArmazenado,
-      typeof tarefasSalvas,
-      tarefasDoAno.length
-    );
     if (
       tarefasSalvas &&
       tipoArmazenado === 'string' &&
       typeof tarefasSalvas === 'object' &&
+      tarefasDoAno &&
       tarefasDoAno.length > 0
     ) {
-      console.log('oi1');
       tarefasDoAno.forEach((tarefas) =>
         tarefas.forEach((tarefa) => {
           if (tarefa.name && tarefa.date && tarefa.hora) {
@@ -131,7 +125,6 @@ function recuperarTarefas() {
       );
     }
   } else {
-    console.log('oi2');
     let tipoArmazenado = typeof localStorage.getItem('tarefas');
     let tarefasSalvas = JSON.parse(`"${localStorage.getItem('tarefas')}"`);
     let tarefas = new Map(Object.entries(tarefasSalvas));
@@ -140,6 +133,7 @@ function recuperarTarefas() {
       tarefasSalvas &&
       tipoArmazenado === 'string' &&
       typeof tarefasSalvas === 'object' &&
+      tarefasDoAno &&
       tarefasDoAno.length > 0
     ) {
       tarefasDoAno.forEach((tarefas) =>
