@@ -20,7 +20,7 @@ div {
   text-align: center;
   font-family: Apple Chancery, cursive;
   border-radius: 10px;
-  padding: 5px;
+  padding: 10px;
 }
 
 label {
@@ -49,8 +49,8 @@ table {
   /* border: 1px solid; */
   padding: 10px;
   border-radius: 10px;
+  display: inline;
 }
-
 thead,
 caption {
   font-size: 20px;
@@ -80,6 +80,7 @@ tbody button {
 }
 
 td {
+  padding: 5px;
   border: 1px solid;
   border-radius: 10px;
 }

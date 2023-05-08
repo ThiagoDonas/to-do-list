@@ -208,10 +208,14 @@ function filtraTabela() {
 
   rendereizarTabela();
 }
-
+function renderizaTabelaPorMes(tarefasDoMes, mesDaTarefa) {}
 function rendereizarTabela() {
   tabela.innerHTML = ' ';
   let filtro = tarefas;
+
+  for (var [key, tarefasDoMes] of tarefasPorAno) {
+    console.log(tarefasDoMes);
+  }
 
   if (tabelaFiltrada) {
     filtro = tabelaFiltrada;
