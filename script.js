@@ -60,7 +60,6 @@ function adicionarTarefas(name, date, hora) {
   //   );
   // }
 
-  console.log(anoDaTarefa);
   if (tarefasPorAno.has(`${anoDaTarefa}`)) {
     let adicionaTarefa = tarefasPorAno.get(`${anoDaTarefa}`);
     adicionaTarefa[mesDaTarefa].push({ name, date, hora });
@@ -87,13 +86,6 @@ function adicionarTarefas(name, date, hora) {
     adicionaTarefa[mesDaTarefa].push({ name, date, hora });
     tarefasPorAno.set(`${anoDaTarefa}`, adicionaTarefa);
   }
-  console.log(
-    tarefasPorAno.get(`${anoDaTarefa}`).forEach((tarefasDoMes) => {
-      tarefasDoMes.forEach((tarefa) => {
-        console.log(tarefa.name);
-      });
-    })
-  );
   tarefas.push({ name, date, hora });
   localStorage.setItem('tarefas', JSON.stringify(tarefas));
 }
