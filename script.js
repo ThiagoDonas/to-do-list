@@ -358,7 +358,7 @@ inputFiltro.addEventListener('input', (e) => {
   filtraTabela();
 });
 
-recuperarTarefas();
+// recuperarTarefas();
 
 if (tarefas.length > 0) {
   rendereizarTabela();
