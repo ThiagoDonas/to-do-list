@@ -7,7 +7,7 @@ let tarefas = [];
 // };
 
 let tarefasPorAno = new Map();
-let tabela = document.getElementById('corpotabela');
+let tabela;
 let editando = false;
 let tabelaFiltrada = null;
 let inputFiltro = document.getElementById('filtro');
@@ -241,11 +241,15 @@ function filtraTabela() {
 
   rendereizarTabela();
 }
-
+function limpaTabela() {
+  for (let i = 0; i < 12; i++) {
+    tabela = document.getElementById(`${i}`);
+    tabela.innerHTML = ' ';
+  }
+}
 function renderizaTabelaPorMes(tarefasDoMes, mesDaTarefa) {
   console.log(tarefasDoMes);
-  let tabela = document.getElementById(`${mesDaTarefa}`);
-  tabela.innerHTML = ' ';
+  tabela = document.getElementById(`${mesDaTarefa}`);
   let filtro = tarefasDoMes;
   if (tabelaFiltrada) {
     filtro = tabelaFiltrada;
@@ -284,15 +288,12 @@ function renderizaTabelaPorMes(tarefasDoMes, mesDaTarefa) {
 }
 function rendereizarTabela() {
   console.log('oi');
-  let tarefasDoAno = tarefasPorAno.get('2023');
-  tarefasDoAno.forEach((tarefas) => {
-    renderizaTabelaPorMes(tarefas, tarefasDoAno.indexOf(tarefas));
-  });
-  // for (var [key, tarefasDoAno] of tarefasPorAno) {
-  //   tarefasDoAno.forEach((tarefas) => {
-  //     renderizaTabelaPorMes(tarefas, tarefasDoAno.indexOf(tarefas));
-  //   });
-  // }
+  limpaTabela();
+  for (var [key, tarefasDoAno] of tarefasPorAno) {
+    tarefasDoAno.forEach((tarefas) => {
+      renderizaTabelaPorMes(tarefas, tarefasDoAno.indexOf(tarefas));
+    });
+  }
 
   // tabela.innerHTML = ' ';
   // let filtro = tarefas;
