@@ -85,7 +85,11 @@ function adicionarTarefas(name, date, hora) {
     tarefasPorAno.set(`${anoDaTarefa}`, adicionaTarefa);
   }
   tarefas.push({ name, date, hora });
-  localStorage.setItem('tarefas', JSON.stringify(tarefas));
+  console.log(JSON.stringify(tarefasPorAno));
+  localStorage.setItem(
+    'tarefas',
+    JSON.stringify(Object.fromEntries(tarefasPorAno))
+  );
 }
 
 function isJsonString(string) {
@@ -98,54 +102,76 @@ function isJsonString(string) {
 }
 
 function recuperarTarefas() {
+  console.log('po');
   if (isJsonString(localStorage.getItem('tarefas'))) {
+    console.log('oi');
     let tipoArmazenado = typeof localStorage.getItem('tarefas');
     let tarefasSalvas = JSON.parse(localStorage.getItem('tarefas'));
-    let tarefasSalvasTipoCorreto =
-      typeof tarefasSalvas === 'object' && tarefasSalvas.length > 0;
-
+    let tarefas = new Map(Object.entries(tarefasSalvas));
+    let tarefasDoAno = tarefas.get('2023');
+    console.log(
+      tarefasSalvas,
+      tipoArmazenado,
+      typeof tarefasSalvas,
+      tarefasDoAno.length
+    );
     if (
       tarefasSalvas &&
       tipoArmazenado === 'string' &&
-      tarefasSalvasTipoCorreto
+      typeof tarefasSalvas === 'object' &&
+      tarefasDoAno.length > 0
     ) {
-      tarefasSalvas.forEach((tarefa) => {
-        if (tarefa.name && tarefa.date && tarefa.hora) {
-          adicionarTarefas(tarefa.name, tarefa.date, tarefa.hora);
-        }
-      });
+      console.log('oi1');
+      tarefasDoAno.forEach((tarefas) =>
+        tarefas.forEach((tarefa) => {
+          if (tarefa.name && tarefa.date && tarefa.hora) {
+            adicionarTarefas(tarefa.name, tarefa.date, tarefa.hora);
+          }
+        })
+      );
     }
   } else {
+    console.log('oi2');
     let tipoArmazenado = typeof localStorage.getItem('tarefas');
     let tarefasSalvas = JSON.parse(`"${localStorage.getItem('tarefas')}"`);
-    let tarefasSalvasTipoCorreto =
-      typeof tarefasSalvas === 'object' && tarefasSalvas.length > 0;
-
+    let tarefas = new Map(Object.entries(tarefasSalvas));
+    let tarefasDoAno = tarefas.get('2023');
     if (
       tarefasSalvas &&
       tipoArmazenado === 'string' &&
-      tarefasSalvasTipoCorreto
+      typeof tarefasSalvas === 'object' &&
+      tarefasDoAno.length > 0
     ) {
-      tarefasSalvas.forEach((tarefa) => {
-        if (tarefa.name && tarefa.date && tarefa.hora) {
-          adicionarTarefas(tarefa.name, tarefa.date, tarefa.hora);
-        }
-      });
+      tarefasDoAno.forEach((tarefas) =>
+        tarefas.forEach((tarefa) => {
+          if (tarefa.name && tarefa.date && tarefa.hora) {
+            adicionarTarefas(tarefa.name, tarefa.date, tarefa.hora);
+          }
+        })
+      );
     }
   }
 
   //tarefas = [...JSON.parse(localStorage.getItem('tarefas'))]
 }
 
-function editarTarefa(index) {
+function editarTarefa(index, date) {
   editando = index;
-  forms.elements.name.value = tarefas[index].name;
-  forms.elements.date.value = tarefas[index].date;
-  forms.elements.hora.value = tarefas[index].hora;
+  let anoDaTarefa = anoTarefa(date);
+  let mesDaTarefa = mesTarefa(date);
+  let adicionaTarefa = tarefasPorAno.get(`${anoDaTarefa}`);
+  forms.elements.name.value = adicionaTarefa[mesDaTarefa][index].name;
+  forms.elements.date.value = adicionaTarefa[mesDaTarefa][index].date;
+  forms.elements.hora.value = adicionaTarefa[mesDaTarefa][index].hora;
 }
 
 function salvarTarefa(index, name, date, hora) {
-  tarefas[index] = { name, date, hora };
+  let anoDaTarefa = anoTarefa(date);
+  let mesDaTarefa = mesTarefa(date);
+  let adicionaTarefa = tarefasPorAno.get(`${anoDaTarefa}`);
+  adicionaTarefa[mesDaTarefa][index] = { name, date, hora };
+  tarefasPorAno.set(`${anoDaTarefa}`, adicionaTarefa);
+  // tarefas[index] = { name, date, hora };
   limpaForms();
 }
 
@@ -155,9 +181,16 @@ function limpaForms() {
   forms.elements.hora.value = null;
 }
 
-function removerTarefa(index) {
-  tarefas.splice(index, 1);
-  localStorage.setItem('tarefas', JSON.stringify(tarefas));
+function removerTarefa(index, date) {
+  let anoDaTarefa = anoTarefa(date);
+  let mesDaTarefa = mesTarefa(date);
+  let adicionaTarefa = tarefasPorAno.get(`${anoDaTarefa}`);
+  adicionaTarefa[mesDaTarefa].splice(index, 1);
+  tarefasPorAno.set(`${anoDaTarefa}`, adicionaTarefa);
+
+  // tarefas.splice(index, 1);
+  localStorage.setItem('tarefas', JSON.stringify(tarefasPorAno));
+
   rendereizarTabela();
 }
 
@@ -177,17 +210,17 @@ function insertTextButton(button, text) {
   button.innerText = text;
 }
 
-function colocaEventoNoBotaoEdite(button, index) {
+function colocaEventoNoBotaoEdite(button, index, date) {
   button.addEventListener('click', (e) => {
     e.stopPropagation;
-    editarTarefa(index);
+    editarTarefa(index, date);
   });
 }
 
-function colocaEventoNoBotaoExcluir(button, index) {
+function colocaEventoNoBotaoExcluir(button, index, date) {
   button.addEventListener('click', (e) => {
     e.stopPropagation;
-    removerTarefa(index);
+    removerTarefa(index, date);
   });
 }
 
@@ -208,21 +241,17 @@ function filtraTabela() {
 
   rendereizarTabela();
 }
-function renderizaTabelaPorMes(tarefasDoMes, mesDaTarefa) {}
-function rendereizarTabela() {
+
+function renderizaTabelaPorMes(tarefasDoMes, mesDaTarefa) {
+  console.log(tarefasDoMes);
+  let tabela = document.getElementById(`${mesDaTarefa}`);
   tabela.innerHTML = ' ';
-  let filtro = tarefas;
-
-  for (var [key, tarefasDoMes] of tarefasPorAno) {
-    console.log(tarefasDoMes);
-  }
-
+  let filtro = tarefasDoMes;
   if (tabelaFiltrada) {
     filtro = tabelaFiltrada;
   } else {
-    filtro = tarefas;
+    filtro = tarefasDoMes;
   }
-
   filtro.forEach((tarefa) => {
     let linha = cretaeRow();
     let colunaName = createColum();
@@ -232,15 +261,17 @@ function rendereizarTabela() {
     let colunaBottaoExcluir = createColum();
     let buttonEdite = createButton();
     let buttonExcluir = createButton();
-
     insertTextButton(buttonEdite, 'Editar');
-    colocaEventoNoBotaoEdite(buttonEdite, filtro.indexOf(tarefa));
+    colocaEventoNoBotaoEdite(buttonEdite, filtro.indexOf(tarefa), tarefa.date);
     insertTextButton(buttonExcluir, 'Excluir');
-    colocaEventoNoBotaoExcluir(buttonExcluir, filtro.indexOf(tarefa));
+    colocaEventoNoBotaoExcluir(
+      buttonExcluir,
+      filtro.indexOf(tarefa),
+      tarefa.date
+    );
     colunaName.innerText = tarefa.name;
     colunaDate.innerText = tarefa.date;
     colunaHora.innerText = tarefa.hora;
-
     colunaBottaoEdite.appendChild(buttonEdite);
     colunaBottaoExcluir.appendChild(buttonExcluir);
     linha.appendChild(colunaName);
@@ -250,6 +281,55 @@ function rendereizarTabela() {
     linha.appendChild(colunaBottaoExcluir);
     tabela.appendChild(linha);
   });
+}
+function rendereizarTabela() {
+  console.log('oi');
+  let tarefasDoAno = tarefasPorAno.get('2023');
+  tarefasDoAno.forEach((tarefas) => {
+    renderizaTabelaPorMes(tarefas, tarefasDoAno.indexOf(tarefas));
+  });
+  // for (var [key, tarefasDoAno] of tarefasPorAno) {
+  //   tarefasDoAno.forEach((tarefas) => {
+  //     renderizaTabelaPorMes(tarefas, tarefasDoAno.indexOf(tarefas));
+  //   });
+  // }
+
+  // tabela.innerHTML = ' ';
+  // let filtro = tarefas;
+
+  // if (tabelaFiltrada) {
+  //   filtro = tabelaFiltrada;
+  // } else {
+  //   filtro = tarefas;
+  // }
+
+  // filtro.forEach((tarefa) => {
+  //   let linha = cretaeRow();
+  //   let colunaName = createColum();
+  //   let colunaDate = createColum();
+  //   let colunaHora = createColum();
+  //   let colunaBottaoEdite = createColum();
+  //   let colunaBottaoExcluir = createColum();
+  //   let buttonEdite = createButton();
+  //   let buttonExcluir = createButton();
+
+  //   insertTextButton(buttonEdite, 'Editar');
+  //   colocaEventoNoBotaoEdite(buttonEdite, filtro.indexOf(tarefa));
+  //   insertTextButton(buttonExcluir, 'Excluir');
+  //   colocaEventoNoBotaoExcluir(buttonExcluir, filtro.indexOf(tarefa));
+  //   colunaName.innerText = tarefa.name;
+  //   colunaDate.innerText = tarefa.date;
+  //   colunaHora.innerText = tarefa.hora;
+
+  //   colunaBottaoEdite.appendChild(buttonEdite);
+  //   colunaBottaoExcluir.appendChild(buttonExcluir);
+  //   linha.appendChild(colunaName);
+  //   linha.appendChild(colunaDate);
+  //   linha.appendChild(colunaHora);
+  //   linha.appendChild(colunaBottaoEdite);
+  //   linha.appendChild(colunaBottaoExcluir);
+  //   tabela.appendChild(linha);
+  // });
 }
 
 forms.addEventListener('submit', (e) => {
