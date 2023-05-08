@@ -1,6 +1,12 @@
 const forms = document.getElementById('myform');
 let tarefas = [];
-let tarefasPorMes = [[], [], [], [], [], [], [], [], [], [], [], []];
+
+// let tarefasPorMes = {
+//   anoCorrente: [[], [], [], [], [], [], [], [], [], [], [], []],
+//   proximoAno: [[], [], [], [], [], [], [], [], [], [], [], []],
+// };
+
+let tarefasPorAno = new Map();
 let tabela = document.getElementById('corpotabela');
 let editando = false;
 let tabelaFiltrada = null;
@@ -32,12 +38,61 @@ function ordenaTarefasOrdenadas(tarefasDoMes) {
   return tarefasDoMesOrdenada;
 }
 
+function anoTarefa(date) {
+  return new Date(date).getFullYear();
+}
+
 function adicionarTarefas(name, date, hora) {
   //tarefas = [...tarefas, { name, date, hora }];
+  let anoDaTarefa = anoTarefa(date);
   let mesDaTarefa = mesTarefa(date);
-  tarefasPorMes[mesDaTarefa].push({ name, date, hora });
-  tarefasPorMes[mesDaTarefa] = ordenaTarefasOrdenadas(
-    tarefasPorMes[mesDaTarefa]
+
+  //let anoAtual = new Date().getFullYear();
+  // if (anoTarefa(date) == anoAtual) {
+  //   tarefasPorMes.anoCorrente[mesDaTarefa].push({ name, date, hora });
+  //   tarefasPorMes.anoCorrente[mesDaTarefa] = ordenaTarefasOrdenadas(
+  //     tarefasPorMes.anoCorrente[mesDaTarefa]
+  //   );
+  // } else {
+  //   tarefasPorMes.proximoAno[mesDaTarefa].push({ name, date, hora });
+  //   tarefasPorMes.proximoAno[mesDaTarefa] = ordenaTarefasOrdenadas(
+  //     tarefasPorMes.proximoAno[mesDaTarefa]
+  //   );
+  // }
+
+  console.log(anoDaTarefa);
+  if (tarefasPorAno.has(`${anoDaTarefa}`)) {
+    let adicionaTarefa = tarefasPorAno.get(`${anoDaTarefa}`);
+    adicionaTarefa[mesDaTarefa].push({ name, date, hora });
+    adicionaTarefa[mesDaTarefa] = ordenaTarefasOrdenadas(
+      adicionaTarefa[mesDaTarefa]
+    );
+    tarefasPorAno.set(`${anoDaTarefa}`, adicionaTarefa);
+  } else {
+    tarefasPorAno.set(`${anoDaTarefa}`, [
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+    ]);
+    let adicionaTarefa = tarefasPorAno.get(`${anoDaTarefa}`);
+    adicionaTarefa[mesDaTarefa].push({ name, date, hora });
+    tarefasPorAno.set(`${anoDaTarefa}`, adicionaTarefa);
+  }
+  console.log(
+    tarefasPorAno.get(`${anoDaTarefa}`).forEach((tarefasDoMes) => {
+      tarefasDoMes.forEach((tarefa) => {
+        console.log(tarefa.name);
+      });
+    })
   );
   tarefas.push({ name, date, hora });
   localStorage.setItem('tarefas', JSON.stringify(tarefas));
