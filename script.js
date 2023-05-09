@@ -85,7 +85,6 @@ function adicionarTarefas(name, date, hora) {
     tarefasPorAno.set(`${anoDaTarefa}`, adicionaTarefa);
   }
   tarefas.push({ name, date, hora });
-  console.log(JSON.stringify(tarefasPorAno));
   localStorage.setItem(
     'tarefas',
     JSON.stringify(Object.fromEntries(tarefasPorAno))
@@ -102,47 +101,47 @@ function isJsonString(string) {
 }
 
 function recuperarTarefas() {
-  console.log('po');
   if (isJsonString(localStorage.getItem('tarefas'))) {
-    console.log('oi');
     let tipoArmazenado = typeof localStorage.getItem('tarefas');
     let tarefasSalvas = JSON.parse(localStorage.getItem('tarefas'));
     let tarefas = new Map(Object.entries(tarefasSalvas));
-    let tarefasDoAno = tarefas.get('2023');
-    if (
-      tarefasSalvas &&
-      tipoArmazenado === 'string' &&
-      typeof tarefasSalvas === 'object' &&
-      tarefasDoAno &&
-      tarefasDoAno.length > 0
-    ) {
-      tarefasDoAno.forEach((tarefas) =>
-        tarefas.forEach((tarefa) => {
-          if (tarefa.name && tarefa.date && tarefa.hora) {
-            adicionarTarefas(tarefa.name, tarefa.date, tarefa.hora);
-          }
-        })
-      );
+    for (var [key, tarefasDoAno] of tarefas) {
+      if (
+        tarefasSalvas &&
+        tipoArmazenado === 'string' &&
+        typeof tarefasSalvas === 'object' &&
+        tarefasDoAno &&
+        tarefasDoAno.length > 0
+      ) {
+        tarefasDoAno.forEach((tarefas) =>
+          tarefas.forEach((tarefa) => {
+            if (tarefa.name && tarefa.date && tarefa.hora) {
+              adicionarTarefas(tarefa.name, tarefa.date, tarefa.hora);
+            }
+          })
+        );
+      }
     }
   } else {
     let tipoArmazenado = typeof localStorage.getItem('tarefas');
     let tarefasSalvas = JSON.parse(`"${localStorage.getItem('tarefas')}"`);
     let tarefas = new Map(Object.entries(tarefasSalvas));
-    let tarefasDoAno = tarefas.get('2023');
-    if (
-      tarefasSalvas &&
-      tipoArmazenado === 'string' &&
-      typeof tarefasSalvas === 'object' &&
-      tarefasDoAno &&
-      tarefasDoAno.length > 0
-    ) {
-      tarefasDoAno.forEach((tarefas) =>
-        tarefas.forEach((tarefa) => {
-          if (tarefa.name && tarefa.date && tarefa.hora) {
-            adicionarTarefas(tarefa.name, tarefa.date, tarefa.hora);
-          }
-        })
-      );
+    for (var [key, tarefasDoAno] of tarefas) {
+      if (
+        tarefasSalvas &&
+        tipoArmazenado === 'string' &&
+        typeof tarefasSalvas === 'object' &&
+        tarefasDoAno &&
+        tarefasDoAno.length > 0
+      ) {
+        tarefasDoAno.forEach((tarefas) =>
+          tarefas.forEach((tarefa) => {
+            if (tarefa.name && tarefa.date && tarefa.hora) {
+              adicionarTarefas(tarefa.name, tarefa.date, tarefa.hora);
+            }
+          })
+        );
+      }
     }
   }
 
@@ -244,7 +243,6 @@ function limpaTabela() {
 }
 
 function renderizaTabelaPorMes(tarefasDoMes, mesDaTarefa) {
-  console.log(tarefasDoMes);
   tabela = document.getElementById(`${mesDaTarefa}`);
   let filtro = tarefasDoMes;
   if (tabelaFiltrada) {
@@ -284,7 +282,7 @@ function renderizaTabelaPorMes(tarefasDoMes, mesDaTarefa) {
 }
 function rendereizarTabela() {
   limpaTabela();
-  for (var [key, tarefasDoAno] of tarefasPorAno) {
+  for (let [key, tarefasDoAno] of tarefasPorAno) {
     tarefasDoAno.forEach((tarefas) => {
       renderizaTabelaPorMes(tarefas, tarefasDoAno.indexOf(tarefas));
     });
@@ -354,7 +352,7 @@ inputFiltro.addEventListener('input', (e) => {
   filtraTabela();
 });
 
-// recuperarTarefas();
+recuperarTarefas();
 
 if (tarefas.length > 0) {
   rendereizarTabela();
