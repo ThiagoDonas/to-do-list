@@ -82,7 +82,10 @@ function isJsonString(string) {
 }
 
 function recuperarTarefas() {
-  if (isJsonString(localStorage.getItem('tarefas'))) {
+  if (
+    isJsonString(localStorage.getItem('tarefas')) &&
+    localStorage.getItem('tarefas')
+  ) {
     let tipoArmazenado = typeof localStorage.getItem('tarefas');
     let tarefasSalvas = JSON.parse(localStorage.getItem('tarefas'));
     let tarefas = new Map(Object.entries(tarefasSalvas));
