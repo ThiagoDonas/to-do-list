@@ -45,25 +45,25 @@ div {
 #janeiro,
 #fevereiro,
 #março {
-  background-color: rgb(150, 106, 233);
+  background-color: beige;
 }
 
 #abril,
 #maio,
 #junho {
-  background-color: rgb(136, 106, 247);
+  background-color: beige;
 }
 
 #julho,
 #agosto,
 #setembro {
-  background-color: rgb(126, 106, 192);
+  background-color: beige;
 }
 
 #outubro,
 #novembro,
 #dezembro {
-  background-color: rgb(80, 83, 173);
+  background-color: beige;
 }
 
 label {
@@ -94,12 +94,14 @@ button:hover {
 }
 
 table {
-  border: 3px solid;
+  border: 3px dashed;
   border-radius: 10px;
   padding: 10px;
   display: inline-block;
   width: 500px;
   margin: 10px;
+  background-color: beige;
+  border-collapse: collapse;
 }
 
 thead,
@@ -110,30 +112,24 @@ caption {
   font-variant: small-caps;
   padding: 5px;
   margin: auto;
+  background-color: bisque;
+  text-decoration: blink;
+}
+thead,
+th {
+  background-color: bisque;
 }
 
 tbody,
 tbody button {
   margin: auto;
   font-family: Apple Chancery, cursive;
-}
-
-.nome,
-.data,
-.hora {
-  background-color: beige;
-}
-
-.editar {
-  background-color: beige;
-}
-
-.excluir {
-  background-color: beige;
+  border-radius: 10px;
 }
 
 td,
-tr {
+tr,
+th {
   border: 1px solid;
   padding: 5px;
   width: 100px;
