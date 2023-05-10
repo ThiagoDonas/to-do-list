@@ -38,9 +38,9 @@ function anoTarefa(date) {
 }
 
 function adicionarTarefas(name, date, hora) {
-  //tarefas = [...tarefas, { name, date, hora }];
   let anoDaTarefa = anoTarefa(date);
   let mesDaTarefa = mesTarefa(date);
+
   if (tarefasPorAno.has(`${anoDaTarefa}`)) {
     let adicionaTarefa = tarefasPorAno.get(`${anoDaTarefa}`);
     adicionaTarefa[mesDaTarefa].push({ name, date, hora });
@@ -125,8 +125,6 @@ function recuperarTarefas() {
       }
     }
   }
-
-  //tarefas = [...JSON.parse(localStorage.getItem('tarefas'))]
 }
 
 function editarTarefa(index, date) {
@@ -145,7 +143,6 @@ function salvarTarefa(index, name, date, hora) {
   let adicionaTarefa = tarefasPorAno.get(`${anoDaTarefa}`);
   adicionaTarefa[mesDaTarefa][index] = { name, date, hora };
   tarefasPorAno.set(`${anoDaTarefa}`, adicionaTarefa);
-  // tarefas[index] = { name, date, hora };
   limpaForms();
 }
 
@@ -162,7 +159,6 @@ function removerTarefa(index, date) {
   adicionaTarefa[mesDaTarefa].splice(index, 1);
   tarefasPorAno.set(`${anoDaTarefa}`, adicionaTarefa);
 
-  // tarefas.splice(index, 1);
   localStorage.setItem('tarefas', JSON.stringify(tarefasPorAno));
 
   rendereizarTabela();
