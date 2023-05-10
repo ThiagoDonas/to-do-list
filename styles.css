@@ -42,6 +42,11 @@ div {
   margin: auto;
 }
 
+.tabelas {
+  display: inline-block;
+  overflow-x: auto;
+  overflow-y: auto;
+}
 #janeiro,
 #fevereiro,
 #março {
@@ -102,6 +107,7 @@ table {
   margin: 10px;
   background-color: beige;
   border-collapse: collapse;
+  table-layout: fixed;
 }
 
 thead,
