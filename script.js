@@ -1,15 +1,10 @@
 const forms = document.getElementById('myform');
 let tarefas = [];
 
-// let tarefasPorMes = {
-//   anoCorrente: [[], [], [], [], [], [], [], [], [], [], [], []],
-//   proximoAno: [[], [], [], [], [], [], [], [], [], [], [], []],
-// };
-
 let tarefasPorAno = new Map();
 let tabela;
 let editando = false;
-let tabelaFiltrada = null;
+let tabelaFiltrada = new Map();
 let inputFiltro = document.getElementById('filtro');
 
 function mesTarefa(date) {
@@ -46,20 +41,6 @@ function adicionarTarefas(name, date, hora) {
   //tarefas = [...tarefas, { name, date, hora }];
   let anoDaTarefa = anoTarefa(date);
   let mesDaTarefa = mesTarefa(date);
-
-  //let anoAtual = new Date().getFullYear();
-  // if (anoTarefa(date) == anoAtual) {
-  //   tarefasPorMes.anoCorrente[mesDaTarefa].push({ name, date, hora });
-  //   tarefasPorMes.anoCorrente[mesDaTarefa] = ordenaTarefas(
-  //     tarefasPorMes.anoCorrente[mesDaTarefa]
-  //   );
-  // } else {
-  //   tarefasPorMes.proximoAno[mesDaTarefa].push({ name, date, hora });
-  //   tarefasPorMes.proximoAno[mesDaTarefa] = ordenaTarefas(
-  //     tarefasPorMes.proximoAno[mesDaTarefa]
-  //   );
-  // }
-
   if (tarefasPorAno.has(`${anoDaTarefa}`)) {
     let adicionaTarefa = tarefasPorAno.get(`${anoDaTarefa}`);
     adicionaTarefa[mesDaTarefa].push({ name, date, hora });
@@ -126,7 +107,7 @@ function recuperarTarefas() {
     let tipoArmazenado = typeof localStorage.getItem('tarefas');
     let tarefasSalvas = JSON.parse(`"${localStorage.getItem('tarefas')}"`);
     let tarefas = new Map(Object.entries(tarefasSalvas));
-    for (var [key, tarefasDoAno] of tarefas) {
+    for (let [key, tarefasDoAno] of tarefas) {
       if (
         tarefasSalvas &&
         tipoArmazenado === 'string' &&
@@ -221,17 +202,26 @@ function filtraTabela() {
   textoFiltro = inputFiltro.value.toUpperCase().trim();
 
   if (textoFiltro.length >= 0 && textoFiltro.length < 3) {
-    tabelaFiltrada = null;
+    tabelaFiltrada = new Map();
+    console.log('oi');
   } else {
-    tabelaFiltrada = tarefas.filter(function (tarefa) {
-      return (
-        tarefa.name.toUpperCase().indexOf(textoFiltro) > -1 ||
-        tarefa.date.toUpperCase().indexOf(textoFiltro) > -1 ||
-        tarefa.hora.toUpperCase().indexOf(textoFiltro) > -1
-      );
-    });
-  }
+    for (let [key, tarefasDoAno] of tarefasPorAno) {
+      let arrayTarefas = [];
 
+      tarefasDoAno.forEach((tarefas) => {
+        let temp = tarefas.filter(function (tarefa) {
+          return (
+            tarefa.name.toUpperCase().indexOf(textoFiltro) > -1 ||
+            tarefa.date.toUpperCase().indexOf(textoFiltro) > -1 ||
+            tarefa.hora.toUpperCase().indexOf(textoFiltro) > -1
+          );
+        });
+        arrayTarefas.push(temp);
+      });
+      tabelaFiltrada.set(`${key}`, arrayTarefas);
+    }
+  }
+  console.log(tabelaFiltrada);
   rendereizarTabela();
 }
 
@@ -245,11 +235,6 @@ function limpaTabela() {
 function renderizaTabelaPorMes(tarefasDoMes, mesDaTarefa) {
   tabela = document.getElementById(`${mesDaTarefa}`);
   let filtro = tarefasDoMes;
-  if (tabelaFiltrada) {
-    filtro = tabelaFiltrada;
-  } else {
-    filtro = tarefasDoMes;
-  }
   filtro.forEach((tarefa) => {
     let linha = cretaeRow();
     let colunaName = createColum();
@@ -282,48 +267,19 @@ function renderizaTabelaPorMes(tarefasDoMes, mesDaTarefa) {
 }
 function rendereizarTabela() {
   limpaTabela();
-  for (let [key, tarefasDoAno] of tarefasPorAno) {
-    tarefasDoAno.forEach((tarefas) => {
-      renderizaTabelaPorMes(tarefas, tarefasDoAno.indexOf(tarefas));
-    });
+  if (tabelaFiltrada.size != 0) {
+    for (let [key, tarefasDoAno] of tabelaFiltrada) {
+      tarefasDoAno.forEach((tarefas) => {
+        renderizaTabelaPorMes(tarefas, tarefasDoAno.indexOf(tarefas));
+      });
+    }
+  } else {
+    for (let [key, tarefasDoAno] of tarefasPorAno) {
+      tarefasDoAno.forEach((tarefas) => {
+        renderizaTabelaPorMes(tarefas, tarefasDoAno.indexOf(tarefas));
+      });
+    }
   }
-
-  // tabela.innerHTML = ' ';
-  // let filtro = tarefas;
-
-  // if (tabelaFiltrada) {
-  //   filtro = tabelaFiltrada;
-  // } else {
-  //   filtro = tarefas;
-  // }
-
-  // filtro.forEach((tarefa) => {
-  //   let linha = cretaeRow();
-  //   let colunaName = createColum();
-  //   let colunaDate = createColum();
-  //   let colunaHora = createColum();
-  //   let colunaBottaoEdite = createColum();
-  //   let colunaBottaoExcluir = createColum();
-  //   let buttonEdite = createButton();
-  //   let buttonExcluir = createButton();
-
-  //   insertTextButton(buttonEdite, 'Editar');
-  //   colocaEventoNoBotaoEdite(buttonEdite, filtro.indexOf(tarefa));
-  //   insertTextButton(buttonExcluir, 'Excluir');
-  //   colocaEventoNoBotaoExcluir(buttonExcluir, filtro.indexOf(tarefa));
-  //   colunaName.innerText = tarefa.name;
-  //   colunaDate.innerText = tarefa.date;
-  //   colunaHora.innerText = tarefa.hora;
-
-  //   colunaBottaoEdite.appendChild(buttonEdite);
-  //   colunaBottaoExcluir.appendChild(buttonExcluir);
-  //   linha.appendChild(colunaName);
-  //   linha.appendChild(colunaDate);
-  //   linha.appendChild(colunaHora);
-  //   linha.appendChild(colunaBottaoEdite);
-  //   linha.appendChild(colunaBottaoExcluir);
-  //   tabela.appendChild(linha);
-  // });
 }
 
 forms.addEventListener('submit', (e) => {

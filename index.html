@@ -10,8 +10,10 @@
     -->
     <link rel="stylesheet" href="styles.css" />
   </head>
+  <header>ToDo List</header>
   <body>
     <div id="form">
+      <header>Adicione uma atividade</header>
       <form id="myform" class="formstyle" action="">
         <div>
           <label for="name ">Nome da Atividade:</label>
@@ -53,17 +55,17 @@
     </div>
 
     <div>
-      <label for="filtro">Pesquisa na tabela:</label>
+      <label for="filtro">Pesquisar na tabela:</label>
       <input
         name="filtro"
         id="filtro"
         type="text"
-        placeholder="Escreva oque deseja filtrar"
+        placeholder="Escreva oque deseja pesquisar"
         title="Escreva uma palavra/termo com tamanho maior que 3"
       />
     </div>
 
-    <div>
+    <div id="janFevMar">
       <table id="janeiro">
         <colgroup>
           <col class="nome" />

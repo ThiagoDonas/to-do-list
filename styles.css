@@ -1,26 +1,69 @@
 body {
-  background-color: #ccc;
+  background-color: beige;
+}
+header {
+  text-align: center;
+  width: 100%;
+  font-family: Apple Chancery, cursive;
+  padding: 10px;
+  font-size: 30px;
 }
 
-.formstyle {
+body header {
+  font-family: Apple Chancery, cursive;
+  font-weight: bold;
+  text-decoration: underline wavy;
+  text-align: center;
+  text-shadow: 0.5px 0.5px 0.5px coral;
+}
+.formstyle,
+#form {
   /* border: 1px solid; */
   padding: 10px;
   border-radius: 10px;
+  width: 50%;
+  margin: auto;
+  background-color: beige;
 }
-
+#form {
+  border: 2px solid;
+}
 form button {
   background-color: rgb(135, 236, 135);
   font-weight: bold;
+  font-size: 20px;
 }
 
 div {
-  width: 75%;
-  margin-left: auto;
-  margin-right: auto;
   text-align: center;
   font-family: Apple Chancery, cursive;
   border-radius: 10px;
   padding: 10px;
+  margin: auto;
+}
+
+#janeiro,
+#fevereiro,
+#março {
+  background-color: rgb(150, 106, 233);
+}
+
+#abril,
+#maio,
+#junho {
+  background-color: rgb(136, 106, 247);
+}
+
+#julho,
+#agosto,
+#setembro {
+  background-color: rgb(126, 106, 192);
+}
+
+#outubro,
+#novembro,
+#dezembro {
+  background-color: rgb(80, 83, 173);
 }
 
 label {
@@ -30,13 +73,19 @@ label {
   text-decoration: underline wavy;
   text-align: center;
   text-shadow: 0.5px 0.5px 0.5px coral;
+  padding: 10px;
 }
-label[for='filtro'] {
+
+label[for='filtro'],
+#filtro {
   display: inline;
+  font-size: 20px;
+  width: 450px;
 }
 
 input {
   border-radius: 10px;
+  padding: 5px;
 }
 
 input:hover,
@@ -45,23 +94,27 @@ button:hover {
 }
 
 table {
-  width: 100%;
-  /* border: 1px solid; */
-  padding: 10px;
+  border: 3px solid;
   border-radius: 10px;
-  display: inline;
+  padding: 10px;
+  display: inline-block;
+  width: 500px;
+  margin: 10px;
 }
+
 thead,
 caption {
   font-size: 20px;
   font-weight: bold;
-  text-align: center;
   font-family: Apple Chancery, cursive;
   font-variant: small-caps;
+  padding: 5px;
+  margin: auto;
 }
 
 tbody,
 tbody button {
+  margin: auto;
   font-family: Apple Chancery, cursive;
 }
 
@@ -79,10 +132,12 @@ tbody button {
   background-color: lightcoral;
 }
 
-td {
-  padding: 5px;
+td,
+tr {
   border: 1px solid;
-  border-radius: 10px;
+  padding: 5px;
+  width: 100px;
+  margin: auto;
 }
 
 tbody button {
