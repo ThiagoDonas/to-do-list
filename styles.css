@@ -44,35 +44,6 @@ div {
   overflow-y: auto;
 }
 
-.tabelas {
-  display: inline-block;
-  overflow-x: auto;
-  overflow-y: auto;
-}
-#janeiro,
-#fevereiro,
-#março {
-  background-color: beige;
-}
-
-#abril,
-#maio,
-#junho {
-  background-color: beige;
-}
-
-#julho,
-#agosto,
-#setembro {
-  background-color: beige;
-}
-
-#outubro,
-#novembro,
-#dezembro {
-  background-color: beige;
-}
-
 label {
   display: block;
   font-family: Apple Chancery, cursive;
