@@ -40,12 +40,57 @@ div {
   border-radius: 10px;
   padding: 10px;
   margin: auto;
-  overflow-x: auto;
-  overflow-y: auto;
 }
 
 .tabelas {
   display: inline-block;
+}
+
+#linha1,
+#linha2,
+#linha3,
+#linha4 {
+  position: relative;
+  height: 300px;
+}
+
+#janeiro,
+#fevereiro,
+#março,
+#abril,
+#maio,
+#junho,
+#julho,
+#agosto,
+#setembro,
+#outubro,
+#novembro,
+#dezembro {
+  position: absolute;
+  display: inline-block;
+  overflow-x: auto;
+  overflow-y: auto;
+}
+
+#janeiro,
+#abril,
+#julho,
+#outubro {
+  left: 2%;
+}
+
+#fevereiro,
+#maio,
+#agosto,
+#novembro {
+  left: 34%;
+}
+
+#março,
+#junho,
+#setembro,
+#dezembro {
+  left: 66%;
 }
 
 label {
