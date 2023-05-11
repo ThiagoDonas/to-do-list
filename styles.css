@@ -1,5 +1,7 @@
 body {
   background-color: beige;
+  min-width: 900px;
+  padding: 10px;
 }
 header {
   text-align: center;
@@ -29,6 +31,7 @@ body header {
 
 #form {
   border: 2px solid;
+  width: 500px;
 }
 
 form button {
