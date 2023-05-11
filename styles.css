@@ -44,6 +44,10 @@ div {
   overflow-y: auto;
 }
 
+.tabelas {
+  display: inline-block;
+}
+
 label {
   display: block;
   font-family: Apple Chancery, cursive;
