@@ -16,6 +16,7 @@ body header {
   text-align: center;
   text-shadow: 0.5px 0.5px 0.5px coral;
 }
+
 .formstyle,
 #form {
   /* border: 1px solid; */
@@ -25,9 +26,11 @@ body header {
   margin: auto;
   background-color: beige;
 }
+
 #form {
   border: 2px solid;
 }
+
 form button {
   background-color: rgb(135, 236, 135);
   font-weight: bold;
@@ -40,12 +43,11 @@ div {
   border-radius: 10px;
   padding: 10px;
   margin: auto;
-  overflow-x: auto;
-  overflow-y: auto;
 }
 
 .tabelas {
   display: inline-block;
+  margin: auto;
 }
 
 label {
@@ -62,11 +64,11 @@ label[for='filtro'],
 #filtro {
   display: inline;
   font-size: 20px;
-  width: 450px;
 }
-
+#filtro {
+  width: 300px;
+}
 input {
-  text-align: center;
   border-radius: 10px;
   padding: 5px;
 }
