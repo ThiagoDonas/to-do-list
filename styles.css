@@ -1,7 +1,6 @@
 body {
   background-color: beige;
   min-width: 900px;
-  padding: 10px;
 }
 header {
   text-align: center;
@@ -18,7 +17,6 @@ body header {
   text-align: center;
   text-shadow: 0.5px 0.5px 0.5px coral;
 }
-
 .formstyle,
 #form {
   /* border: 1px solid; */
@@ -28,10 +26,12 @@ body header {
   margin: auto;
   background-color: beige;
 }
-
 #form {
   border: 2px solid;
-  width: 500px;
+  display: flex;
+  flex-direction: column;
+  min-width: 800px;
+  margin: auto;
 }
 
 form button {
@@ -48,9 +48,11 @@ div {
   margin: auto;
 }
 
-.tabelas {
-  display: inline-block;
-  margin: auto;
+#linha1,
+#linha2,
+#linha3,
+#linha4 {
+  display: flex;
 }
 
 label {
@@ -67,11 +69,11 @@ label[for='filtro'],
 #filtro {
   display: inline;
   font-size: 20px;
+  width: 450px;
 }
-#filtro {
-  width: 300px;
-}
+
 input {
+  text-align: center;
   border-radius: 10px;
   padding: 5px;
 }
