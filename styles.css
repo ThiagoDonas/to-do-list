@@ -69,9 +69,11 @@ label[for='filtro'],
   display: inline;
   font-size: 20px;
 }
+
 #filtro {
   width: 300px;
 }
+
 input {
   border-radius: 10px;
   padding: 5px;
@@ -97,12 +99,9 @@ table {
 thead,
 caption {
   font-size: 20px;
-  font-weight: bold;
-  font-family: Apple Chancery, cursive;
-  font-variant: small-caps;
+  font-family: Luminari, fantasy;
   padding: 0px 0px 10px;
   margin: auto;
-  text-decoration: blink;
 }
 thead,
 th {
