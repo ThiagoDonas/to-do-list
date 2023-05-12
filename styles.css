@@ -75,6 +75,7 @@ label[for='filtro'],
 input {
   border-radius: 10px;
   padding: 5px;
+  border: solid 2px;
 }
 
 input:hover,
@@ -85,13 +86,12 @@ button:hover {
 table {
   border: 3px dashed;
   border-radius: 10px;
-  padding: 10px;
+  padding: 10px 20px 20px;
   display: inline-block;
   width: 500px;
   margin: 10px;
   background-color: beige;
   border-collapse: collapse;
-  table-layout: fixed;
 }
 
 thead,
@@ -100,7 +100,7 @@ caption {
   font-weight: bold;
   font-family: Apple Chancery, cursive;
   font-variant: small-caps;
-  padding: 5px;
+  padding: 0px 0px 10px;
   margin: auto;
   text-decoration: blink;
 }
